@@ -9,5 +9,5 @@ else:
 
 dataset = pandas.read_csv(path)
 print(dataset)
-dataset = dataset / dataset.max() * 2 - 1.0
+dataset = dataset / dataset.max()
 print(dataset[:5])
