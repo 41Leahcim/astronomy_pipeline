@@ -9,12 +9,8 @@ if len(sys.argv) >= 2:
 else:
     path = input("Enter path to dataset: ")
 
+# Load the dataset
 dataset = pandas.read_csv(path)
-
-# Remove columns where all values are equal
-for label in dataset.columns:
-    if dataset[label].min() == dataset[label].max():
-        dataset.drop(columns=label, inplace=True)
 
 # Drop the runID as it isn't a valid data point
 dataset.drop(columns="runID", inplace=True)
@@ -61,4 +57,5 @@ loss, acc = model.evaluate(x,  y)
 print("Test accuracy:", acc)
 print("Test loss:", loss)
 
+# Save the model
 model.save("model.keras")

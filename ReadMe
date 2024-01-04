@@ -1,10 +1,37 @@
+# Astronomy pipeline
+This application predicts whether the isochrone is matching, using the following metrics:
+ - Gaia G magnitude
+ - Gaia GBP magnitude
+ - Gaia GBP magnitude
+ - extinction parameter
+ - extinction in the V band
+ - extinction in the G band
+ - extinction in the BP band
+ - extinction in the RP band
+ - color excess in BP-RP color
+ - color excess in B-V color
+ - V-I color without reddening
+ - V-I color with reddening
+ - Absolute magnitude in the Gaia G band
+ - Stellar radius
+ - Linear distance of the source
+ - isochrone matching flag (0 or 1)
+ - Stellar effective temperature
+ - Stellar gravity
+ - Stellar [Fe/H] abundance ratio
+ - Stellar [alpha/Fe] abundance ratio
+
 ## Model
 ### Shape
-model = tf.keras.models.Sequential([
-    tf.keras.layers.Dense(4, activation="elu"),
-    tf.keras.layers.Dense(2, activation="elu"),
-    tf.keras.layers.Dense(1, activation="sigmoid")
-])
+| Layer (type) | Output Shape | Param # |  
+|-|-|-|
+| dense (Dense) | (None, 4) | 76 |
+| dense_1 (Dense) | (None, 2) | 10 |
+| dense_2 (Dense) | (None, 1) | 3 |
+
+Total params: 89
+Trainable params: 89
+Non-trainable params: 0
 
 ### Results on datasets
 #### [parameters_MARCS_LIBRARY](dataset/parameters_MARCS_LIBRARY.csv)
