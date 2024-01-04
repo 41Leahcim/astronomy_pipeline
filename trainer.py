@@ -60,3 +60,5 @@ x = testing.drop("fl", axis=1).to_numpy()
 loss, acc = model.evaluate(x,  y)
 print("Test accuracy:", acc)
 print("Test loss:", loss)
+
+model.save("model.keras")
