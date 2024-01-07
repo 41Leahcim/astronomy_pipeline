@@ -21,6 +21,15 @@ This application predicts whether the isochrone is matching, using the following
  - Stellar [Fe/H] abundance ratio
  - Stellar [alpha/Fe] abundance ratio
 
+## Dependencies
+ - Python 3
+ - Tensorflow 2
+ - Pandas
+ - Numpy
+
+Optional:
+ - Cuda: only if the model has to run on the gpu
+
 ## Model
 ### Shape
 | Layer (type) | Output Shape | Param # |  
