@@ -30,6 +30,11 @@ This application predicts whether the isochrone is matching, using the following
 Optional:
  - Cuda: only if the model has to run on the gpu
 
+## Running the application
+Use `flask --app runner.py run` to run the server.
+Use `python trainer.py [dataset_path]` to train a new model, replace `[dataset_path]` with the actual path to the dataset.
+Use `python best_label.py [dataset_path]` to find the best label for training the model, replace `[dataset_path]` with the actual path to the dataset.
+
 ## Model
 ### Shape
 | Layer (type) | Output Shape | Param # |  
