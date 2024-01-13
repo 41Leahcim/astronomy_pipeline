@@ -1,0 +1,84 @@
+===============================================================================================================
+                                            ReadMe 
+===============================================================================================================
+List of files in CSV directory:
+parameters_MARCS_LIBRARY.csv   
+parameters_PHOENIX_LIBRARY.csv 
+parameters_A_LIBRARY.csv       
+parameters_OB_LIBRARY.csv 
+
+===============================================================================================================
+
+This ReadMe describes the 4 files that contain the full set of parameters accompanying the 
+spectral simulations made for CU8. Each file is named according to their spectral library 
+used as input for simulations. 
+Each line of the files gives, for a star with the specified physical parameters, the derived 
+magnitudes, extinctions and color excesses based on a specific simulated spectra. 
+See the table at the end of this Readme for a detailed description of each column.
+
+
+We produced these simulations at a fixed apparent G magnitude of 15 mag (GG) and we provide 
+the corresponding GBP and GRP for each source.
+
+Simulations of BP/RP spectra are needed to develop/prepare some CU8 Apsis modules. A simulator 
+developed in DPAC by CU5 takes as input a higher resolution, not-normalized spectra. CU8 
+collected a series of spectral libraries for this purpose, and in DR3 Apsis used these four
+libraries: MARCS, PHOENIX, A, OB.
+Full details on simulations and spectral libraries are given in Section 11.2.3 of the Gaia DR3 
+
+A synthetic spectrum is defined by its effective temperature (teff), surface gravity (logg), 
+and metallicity [M/H]. We provide [Fe/H] (feH) and [alpha/Fe] (alphaFe), and [M/H] = [Fe/H] + 
+[alpha/Fe]. 
+The spectral libraries available to CU8 are computed at discrete values of teff, logg, feH.
+alphaFe is fixed to the solar values (=0.0) for all but the MARCS library, which allows [alpha/Fe]
+to vary with [Fe/H]. See the documentation for more details on metallicity (Section 11.2.3).
+
+A synthetic spectrum is normalized to a stellar unit surface, we thus need at least the radius 
+(R) to obtain the absolute flux. This information is provided by evolutionary models. 
+We developed a specific procedure for matching a spectrum with isochrones. A flag (parameter 
+17) tags if the match is satisfactory (=0) or not (=1). 
+See Section 11.2.3 of the Gaia DR3 online documentation for details. 
+Once the radius of the star is known, we can scale the synthetic spectrum to simulate the 
+absolute flux of the star (at 10 pc), and using the eDR3 passbands we can derive the absolute 
+magnitude MG. Given MG, the extinction in the G band AG and the apparent magnitude GG, we can 
+derive the distance (d) of the star. These quantities are needed by GSPPhot. 
+
+The emission from a star can be attenuated by interstellar absorption. To simulate extinction,
+we use the Fitzpatrick (1999) extinction curve. We simulated each synthetic spectrum at different 
+levels of extinction, parametrized by A0 values (monochromatic extinction at 541.4 nm). Details 
+are provided in Section 11.2.3 of the online documentation. From these simulations, we 
+computed the photometry and extinction measurements in different passbands. Those were used 
+by different steps in the preparation of Apsis and in the validation of its results. We emphasize 
+that we computed the extinction measurements by integrating the reddened spectra, i.e. we did not 
+use any approximation or calibration. The extinction in a given passband comes from the difference 
+between the reddened magnitude and the un-reddened one.
+
+
+
+
+==== =========== ================= ============================ ======================================== ======================================
+  #    Name        Unit              UCD                          Description                              notes                  
+ ==== =========== ================= ============================ ======================================== =====================================
+  1   runID                          meta.code                    running Gaia ID                          unique Gaia-like ID    
+  2   GG          mag                phot.mag;em.opt              Gaia G magnitude                         normalized to G=15mag  
+  3   GBP         mag                phot.mag;em.opt.B            Gaia GBP magnitude                       normalized to G=15mag           
+  4   GRP         mag                phot.mag;em.opt.R            Gaia GBP magnitude                       normalized to G=15mag           
+  5   A0          mag                phys.absorption;em.opt;      extinction parameter                     monochromatic extinction at 541.4 nm
+  6   AV          mag                phys.absorption;em.opt.V;    extinction in the V band                 computed by spectrum integration
+  7   AG          mag                phys.absorption;em.opt.G;    extinction in the G band                 computed by spectrum integration
+  8   ABP         mag                phys.absorption;em.opt.B;    extinction in the BP band                computed by spectrum integration
+  9   ARP         mag                phys.absorption;em.opt.R;    extinction in the RP band                computed by spectrum integration
+  10  Ebprp       mag                phys.absorption;phot.color   color excess in BP-RP color              computed by spectrum integration
+  11  Ebv         mag                phys.absorption;phot.color   color excess in B-V color                computed by spectrum integration
+  12  VI0         mag                phot.color                   V-I color without reddening              computed by spectrum integration
+  13  VIc         mag                phot.color                   V-I color with reddening                 computed by spectrum integration
+  14  Mg          mag                phot.mag;em.opt              Absolute magnitude in the Gaia G band    computed scaling the synthetic spectrum with R                        
+  15  R           Rsun               phys.size.radius             Stellar radius                           from match with evolutionary models
+  16  d           pc                 pos.distance                 Linear distance of the source            computed from MG,Gg,AG
+  17  flag                           meta.code                    isochrone matching flag (0 or 1)         0=good match; 1=bad match
+  18  teff        K                  phys.temperature.effective   Stellar effective temperature                                                      
+  19  logg        log10(cm/s**2)     phys.gravity                 Stellar gravity                                                          
+  20  feH         dex                phys.abund.Fe                Stellar [Fe/H] abundance ratio           [M/H]=[Fe/H] + [alpha/Fe]       
+  21  alphaFe     dex                phys.abund                   Stellar [alpha/Fe] abundance ratio          
+ ==== =========== ================= ============================ ======================================== ======================================
+
